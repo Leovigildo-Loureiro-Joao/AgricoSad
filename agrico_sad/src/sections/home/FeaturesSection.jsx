@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { FaBug } from 'react-icons/fa';
-import { GiFarmer, GiPlantRoots } from 'react-icons/gi';
+import { GiLifeSupport, GiPlantRoots } from 'react-icons/gi';
 import { WiDaySunny, WiRain, WiStrongWind } from 'react-icons/wi';
 
 const features = [
@@ -36,7 +36,7 @@ const features = [
     bg: 'bg-purple-50',
     color: 'text-purple-500',
     desc: 'Treine estrategias sem risco real. Ideal para escolas e incubadoras.',
-    icon: GiFarmer,
+    icon: GiLifeSupport,
     title: 'Modo de incubacao e ensino',
   },
   {

@@ -1,3 +1,87 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Base scale */
+html {
+  font-size: 75%; /* 1rem = 12px */
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+  line-height: 1.7;
+  color: #111827; /* agro-dark */
+  background-color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Sora", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #111827;
+}
+
+h1 { font-size: 4.8rem; }
+h2 { font-size: 3.6rem; }
+h3 { font-size: 3.0rem; }
+h4 { font-size: 2.4rem; }
+h5 { font-size: 2.0rem; }
+h6 { font-size: 1.8rem; }
+
+p { font-size: 1.6rem; line-height: 1.7; }
+small { font-size: 1.2rem; }
+
+/* Component helpers */
+@layer components {
+  .btn-primary {
+    @apply bg-agro-green-700 text-white font-semibold rounded-lg px-6 py-3
+           shadow-green hover:bg-agro-green-800 hover:shadow-field
+           active:scale-95 transition-all duration-200;
+    font-size: 1.6rem;
+  }
+
+  .btn-outline {
+    @apply border border-agro-green-700 text-agro-green-800 font-semibold rounded-lg px-6 py-3
+           hover:border-agro-green-800 hover:bg-agro-green-light-100
+           active:scale-95 transition-all duration-200;
+    font-size: 1.6rem;
+  }
+
+  .card {
+    @apply rounded-xl border border-agro-border-200 bg-agro-surface shadow-card p-8;
+  }
+
+  .input-field {
+    @apply w-full bg-transparent border-b border-agro-border-200 pb-2 pt-5
+           text-agro-dark-800 text-base outline-none
+           focus:border-agro-green-700 transition-colors duration-200;
+    font-size: 1.6rem;
+  }
+
+  .label-float {
+    @apply absolute left-0 pointer-events-none font-medium text-agro-dark-400
+           transition-all duration-200;
+    font-size: 1.4rem;
+  }
+}
+
+@layer utilities {
+  .font-title { font-family: "Sora", ui-sans-serif, system-ui, sans-serif; }
+  .font-body { font-family: "Inter", ui-sans-serif, system-ui, sans-serif; }
+  .font-code { font-family: "JetBrains Mono", ui-monospace, monospace; }
+
+  .text-balance { text-wrap: balance; }
+}

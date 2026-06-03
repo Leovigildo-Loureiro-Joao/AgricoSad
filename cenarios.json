@@ -1,0 +1,564 @@
+{
+  "sistema": "SAD AgroClima",
+  "descricao": "Sistema de Apoio à Decisão agrícola para Angola",
+  "versao": "1.0",
+  "total_cenarios": 22,
+  "grupos": [
+    { "codigo": "P", "nome": "Plantio", "total": 5 },
+    { "codigo": "PR", "nome": "Pragas", "total": 5 },
+    { "codigo": "C", "nome": "Clima Extremo", "total": 5 },
+    { "codigo": "S", "nome": "Solo e Água", "total": 4 },
+    { "codigo": "L", "nome": "Colheita e Pós-Colheita", "total": 3 }
+  ],
+  "cenarios": [
+    {
+      "codigo": "P1",
+      "grupo": "P",
+      "grupo_nome": "Plantio",
+      "pergunta": "Quando devo plantar o meu milho para aproveitar as primeiras chuvas?",
+      "descricao_tecnica": "Calcular a janela óptima de sementeira com base no início da estação chuvosa, histórico de precipitação e temperatura do solo.",
+      "parametros": {
+        "localizacao": "região/província",
+        "cultura": "milho",
+        "ano_actual": true,
+        "precipitacao_historica": "últimos 10 anos (mm)",
+        "temperatura_minima_nocturna": "°C"
+      },
+      "logica": {
+        "regra_principal": "Se precipitação acumulada dos últimos 10 dias >= 20 mm E temperatura mínima nocturna >= 18°C → janela óptima aberta",
+        "verificacao_adicional": "Probabilidade de chuva nos próximos 14 dias",
+        "janelas_regionais": {
+          "Huambo": "outubro–novembro",
+          "Cunene": "novembro–dezembro (alta variabilidade)"
+        }
+      },
+      "exemplo_resultado": "Com base nas chuvas dos últimos 10 dias (23 mm) e temperatura mínima de 19°C no Huambo, a janela de plantio está aberta. Plante entre 15 e 25 de outubro para aproveitar a humidade do solo. A probabilidade de chuva nos próximos 14 dias é de 72%.",
+      "fonte_dados": ["INAMET Angola", "CHIRPS", "ERA5 Copernicus"]
+    },
+    {
+      "codigo": "P2",
+      "grupo": "P",
+      "grupo_nome": "Plantio",
+      "pergunta": "Qual é a densidade certa de sementeira do feijão para o meu campo?",
+      "descricao_tecnica": "Recomendar espaçamento e número de plantas por hectare com base no tipo de solo, disponibilidade hídrica e variedade local.",
+      "parametros": {
+        "cultura": "feijão",
+        "tipo_solo": ["arenoso", "argiloso", "franco"],
+        "regiao": "província",
+        "regime_hidrico": ["sequeiro", "irrigado"],
+        "variedade": "local/melhorada"
+      },
+      "logica": {
+        "regra_base": "Feijão sequeiro: espaçamento 50×20 cm = 100.000 plantas/ha",
+        "ajuste_solo_arenoso": "Cunene → reduzir para 80.000 plantas/ha (menor retenção de água)",
+        "ajuste_solo_argiloso": "Huambo → manter 100.000 plantas/ha",
+        "ajuste_variabilidade": "±15% com base na irregularidade pluviométrica histórica da zona"
+      },
+      "exemplo_resultado": "Para o seu campo de feijão no solo arenoso do Cunene em regime de sequeiro, recomendo 80.000 plantas/ha com espaçamento de 50×25 cm. Com esta densidade, o risco de fracasso por falta de chuva reduz-se em 30% face à densidade máxima.",
+      "fonte_dados": ["FAO fichas técnicas de feijão", "MINAGRI Angola", "ISRIC SoilGrids"]
+    },
+    {
+      "codigo": "P3",
+      "grupo": "P",
+      "grupo_nome": "Plantio",
+      "pergunta": "Posso plantar mandioca agora ou é cedo demais?",
+      "descricao_tecnica": "Avaliar a adequação do momento de plantio da mandioca com base em temperatura, humidade do solo e calendário agroclimático regional.",
+      "parametros": {
+        "cultura": "mandioca",
+        "data_actual": "ISO 8601",
+        "precipitacao_recente_15dias": "mm",
+        "temperatura_media": "°C",
+        "fase_lunar": "opcional",
+        "localizacao": "região/província"
+      },
+      "logica": {
+        "condicao_minima_chuva": ">=15 mm nos últimos 15 dias antes do plantio",
+        "temperatura_optima_min": 25,
+        "temperatura_optima_max": 30,
+        "risco_temperatura_baixa": "Se temp < 20°C → risco de falha de enraizamento (+40%)",
+        "risco_solo_seco": "Se < 10 mm/15 dias → atrasar plantio 2 semanas"
+      },
+      "exemplo_resultado": "Com apenas 8 mm de chuva nos últimos 15 dias e temperatura média de 18°C no Bié, é cedo para plantar mandioca. Espere mais 2 a 3 semanas. Plantar agora representa 40% de risco de falha no enraizamento. Verifique novamente a 20 de outubro.",
+      "fonte_dados": ["CIMMYT", "FAO", "INAMET Angola", "CHIRPS"]
+    },
+    {
+      "codigo": "P4",
+      "grupo": "P",
+      "grupo_nome": "Plantio",
+      "pergunta": "Vale a pena plantar batata-doce na época seca se eu tiver acesso a água?",
+      "descricao_tecnica": "Simular a viabilidade e rentabilidade do plantio de batata-doce fora da época com irrigação manual ou por gravidade.",
+      "parametros": {
+        "cultura": "batata-doce",
+        "acesso_agua": ["sim", "não"],
+        "quantidade_agua_litros_dia": "L/dia",
+        "area_ha": "hectares",
+        "preco_mercado_local": "Kz/kg"
+      },
+      "logica": {
+        "necessidade_hidrica": "400–550 mm por ciclo (90–120 dias)",
+        "condicao_irrigacao": "Se irrigação disponível >= 5 mm/dia → viável",
+        "comparacao_economica": "Custo água + mão-de-obra vs preço de mercado na época seca",
+        "premium_epoca_seca": "Preço 40–60% mais alto na época seca",
+        "decisao": "Se margem líquida > 0 → plantar compensa"
+      },
+      "exemplo_resultado": "Com 6 mm/dia de irrigação disponível e preço de 180 Kz/kg na época seca, o plantio de 0,5 ha de batata-doce pode gerar lucro de 280.000 Kz por ciclo (4 meses). O custo de irrigação estimado é 45.000 Kz. Margem positiva: compensa plantar.",
+      "fonte_dados": ["FAO batata-doce irrigada", "MINCO Angola", "DNGRH Angola"]
+    },
+    {
+      "codigo": "P5",
+      "grupo": "P",
+      "grupo_nome": "Plantio",
+      "pergunta": "Que cultura devo plantar primeiro se só tenho terra para uma?",
+      "descricao_tecnica": "Priorizar a cultura mais adequada à zona e ao período com base em probabilidade de chuva, preço de mercado, resistência à seca e ciclo.",
+      "parametros": {
+        "localizacao": "região/província",
+        "epoca_ano": "mês",
+        "disponibilidade_agua": ["sim", "não"],
+        "distancia_mercado_km": "km",
+        "culturas_disponiveis": ["milho", "feijão", "amendoim", "mandioca", "batata-doce"]
+      },
+      "logica": {
+        "criterios_ponderados": {
+          "resistencia_seca": "30%",
+          "rentabilidade_por_ha": "30%",
+          "ciclo_curto": "20%",
+          "facilidade_escoamento": "20%"
+        },
+        "recomendacoes_regionais": {
+          "sul_semiarido": ["amendoim", "feijão-verde"],
+          "planalto_central": ["milho", "feijão"],
+          "norte_humido": ["mandioca", "café"]
+        }
+      },
+      "exemplo_resultado": "Para a sua região no Cunene com chuvas irregulares e mercado a 30 km, o amendoim é a melhor opção: suporta 45 dias de seca, tem ciclo de 90 dias e pode render 120.000 Kz/ha nesta época. O feijão seria a segunda escolha. O milho tem risco elevado com menos de 400 mm.",
+      "fonte_dados": ["FAOSTAT", "MINAGRI Angola", "análise multicritério agronómica regional"]
+    },
+    {
+      "codigo": "PR1",
+      "grupo": "PR",
+      "grupo_nome": "Pragas",
+      "pergunta": "Se eu não pulverizar contra lagarta, quanto vou perder?",
+      "descricao_tecnica": "Estimar a perda percentual de produtividade do milho com base na pressão da lagarta-do-cartucho, fase da cultura e temperatura.",
+      "parametros": {
+        "cultura": "milho",
+        "fase": ["vegetativo", "floração", "maturação"],
+        "nivel_infestacao": ["baixo", "médio", "alto"],
+        "temperatura_actual": "°C"
+      },
+      "logica": {
+        "regras": [
+          {
+            "condicao": "nivel=alto E fase=floração E temp>28°C",
+            "perda_percentual": "40–60%"
+          },
+          {
+            "condicao": "nivel=médio E fase=floração",
+            "perda_percentual": "15–30%"
+          },
+          {
+            "condicao": "nivel=baixo",
+            "perda_percentual": "<5%"
+          }
+        ],
+        "analise_custo_beneficio": "Custo pulverização ~15.000 Kz/ha vs perda estimada em Kz"
+      },
+      "exemplo_resultado": "Com temperatura de 32°C e lagarta em nível alto no milho em floração, a perda estimada sem pulverização é de 45–55% da produção. Isso representa cerca de 70.000 Kz por hectare. Custo do controlo: ~15.000 Kz. Aplique inseticida este fim-de-semana.",
+      "fonte_dados": ["CIMMYT lagarta-do-cartucho África", "FAO", "IITA", "dados campo Zâmbia/Moçambique"]
+    },
+    {
+      "codigo": "PR2",
+      "grupo": "PR",
+      "grupo_nome": "Pragas",
+      "pergunta": "A cochonilha está a atacar a minha mandioca. Já perdi muito?",
+      "descricao_tecnica": "Estimar dano acumulado da cochonilha-da-mandioca e projecção de perda até à colheita com base no nível de infestação e fase da planta.",
+      "parametros": {
+        "cultura": "mandioca",
+        "nivel_infestacao": ["leve", "moderado", "severo"],
+        "semanas_desde_infestacao": "número",
+        "semanas_ate_colheita": "número"
+      },
+      "logica": {
+        "regras": [
+          {
+            "condicao": "severo + >=4 semanas + fase crescimento",
+            "perda_percentual_raizes": "30–50%"
+          },
+          {
+            "condicao": "moderado",
+            "perda_percentual_raizes": "10–20%"
+          },
+          {
+            "condicao": "leve",
+            "perda_percentual_raizes": "<5%"
+          }
+        ],
+        "mitigacao": "Parasitoide Anagyrus lopezi (controlo biológico CIRAD)",
+        "custo_tratamento_estimado": "8.000 Kz/ha"
+      },
+      "exemplo_resultado": "Com infestação moderada de cochonilha há 3 semanas e 10 semanas até à colheita, estima-se perda de 15–20% das raízes. Recomendo introduzir o parasitoide natural (disponível na estação agronómica de Huambo) agora. Custo estimado: 8.000 Kz. Perda evitada: ~40.000 Kz.",
+      "fonte_dados": ["CIRAD", "IITA cochonilha mandioca África subsariana", "FAO", "adaptado Angola"]
+    },
+    {
+      "codigo": "PR3",
+      "grupo": "PR",
+      "grupo_nome": "Pragas",
+      "pergunta": "Como sei se as lesmas estão a danificar o meu feijão de noite?",
+      "descricao_tecnica": "Detectar e quantificar dano de lesmas no feijão com base em temperatura nocturna, humidade e observação de campo.",
+      "parametros": {
+        "cultura": "feijão",
+        "fase": ["germinação", "vegetativo"],
+        "temperatura_nocturna": "°C",
+        "humidade_relativa_nocturna": "%",
+        "sinais_visuais": {
+          "muco_presente": ["sim", "não"],
+          "folhas_rendadas": ["sim", "não"]
+        }
+      },
+      "logica": {
+        "condicoes_actividade_lesmas": "temp nocturna < 22°C E humidade > 80% E fase germinação",
+        "dano_estimado": "1 lesma/m² → perda de 5–8% das plântulas",
+        "confirmacao": "muco + folhas rendadas de manhã → presença confirmada",
+        "risco_alto": "planalto central na pré-estação",
+        "controlo": "isco de metaldehído 2 kg/ha ao entardecer"
+      },
+      "exemplo_resultado": "Com temperatura nocturna de 18°C e humidade de 85% no Bié, as condições são ideais para lesmas. Se encontrar muco nas folhas de manhã, aplique isco de metaldehído (2 kg/ha) ao entardecer. Risco de perda de 10–15% das plântulas se não agir nos próximos 3 dias.",
+      "fonte_dados": ["FAO Integrated Pest Management", "dados Zâmbia/Moçambique", "adaptados planalto angolano"]
+    },
+    {
+      "codigo": "PR4",
+      "grupo": "PR",
+      "grupo_nome": "Pragas",
+      "pergunta": "A broca está a destruir o meu café. Quando devo colher para não perder tudo?",
+      "descricao_tecnica": "Determinar a janela ideal de colheita antecipada do café para minimizar danos da broca-do-café (Hypothenemus hampei).",
+      "parametros": {
+        "cultura": "café",
+        "variedade": ["robusta", "arábica"],
+        "nivel_infestacao_percentagem": "%",
+        "semanas_ate_maturacao_completa": "número"
+      },
+      "logica": {
+        "limiar_antecipacao": "Se > 10% dos grãos brocados → antecipação da colheita recomendada",
+        "beneficio_antecipacao": "Colheita a 90–95% de maturação reduz perdas em 60%",
+        "comparacao": "Perda qualidade grãos verdes (~8%) vs perda total por broca (25–35%)",
+        "pico_broca_regioes": {
+          "Uíge": "novembro–dezembro",
+          "Kwanza_Norte": "novembro–dezembro"
+        }
+      },
+      "exemplo_resultado": "Com 15% dos grãos brocados e 3 semanas para maturação completa, recomendo colheita em 10 dias (95% de maturação). A perda de qualidade é de ~8% mas evita perda total de 25–35% por broca. Seque rapidamente depois da colheita para travar o ciclo da praga.",
+      "fonte_dados": ["CENICAFÉ", "IICA", "FAO Hypothenemus hampei gestão", "dados históricos café Uíge/Kwanza Norte"]
+    },
+    {
+      "codigo": "PR5",
+      "grupo": "PR",
+      "grupo_nome": "Pragas",
+      "pergunta": "O amendoim está com manchas. É fungo ou praga de insecto?",
+      "descricao_tecnica": "Diagnóstico diferencial simplificado de doenças e pragas do amendoim com base em sintomas visuais, época e condições climáticas.",
+      "parametros": {
+        "cultura": "amendoim",
+        "sintomas": ["manchas foliares", "murcha", "galha", "apodrecimento"],
+        "localizacao_lesao": ["folha", "caule", "raiz"],
+        "temperatura": "°C",
+        "humidade_recente": "%"
+      },
+      "logica": {
+        "diagnosticos": [
+          {
+            "sintoma": "manchas circulares castanhas nas folhas",
+            "condicao": "humidade > 75% E temp 25–30°C",
+            "diagnostico": "Cercospora (fungo)",
+            "controlo": "fungicida à base de cobre 8g/L"
+          },
+          {
+            "sintoma": "manchas amarelas + insectos pequenos visíveis",
+            "diagnostico": "áfidos ou trips",
+            "controlo": "inseticida sistémico"
+          },
+          {
+            "sintoma": "murcha súbita + galhas nas raízes",
+            "diagnostico": "nematodos",
+            "controlo": "rotação de culturas"
+          }
+        ]
+      },
+      "exemplo_resultado": "As manchas circulares castanhas nas folhas do amendoim, com humidade de 80% e temperatura de 27°C no Huambo, indicam Cercospora (mancha de olho de pássaro). Aplique fungicida à base de cobre (8 g/L). Custo estimado: 6.000 Kz/ha. Repita em 14 dias se chuva persistir.",
+      "fonte_dados": ["ICRISAT amendoim África", "FAO", "dados campo RDC/Zâmbia", "adaptados Angola"]
+    },
+    {
+      "codigo": "C1",
+      "grupo": "C",
+      "grupo_nome": "Clima Extremo",
+      "pergunta": "Vem uma seca a seguir? Tenho de regar ou a chuva vem a tempo?",
+      "descricao_tecnica": "Calcular probabilidade de período seco crítico nos próximos 21 dias e impacto por fase de cultura, com recomendação de irrigação de emergência.",
+      "parametros": {
+        "localizacao": "região/província",
+        "cultura": "string",
+        "fase_actual": "string",
+        "precipitacao_ultimos_30dias": "mm",
+        "previsao_climatica": "CHIRPS ou ECMWF"
+      },
+      "logica": {
+        "alerta_vermelho": "probabilidade seca > 14 dias consecutivos > 60% E fase crítica (floração/tuberização)",
+        "calculo_deficit": "ETc – precipitação esperada = défice hídrico",
+        "accao": "Recomendar irrigação de suplemento (mm/dia/m²) ou mulching para redução de evaporação em 40%"
+      },
+      "exemplo_resultado": "A previsão indica 70% de probabilidade de 18 dias sem chuva significativa no Cunene. O seu milho está em floração — fase crítica. Recomendo irrigação de suplemento de 5 mm/dia se possível, ou cobertura morta (mulching) para reduzir evaporação em 40%. Sem acção, perda estimada: 35–50%.",
+      "fonte_dados": ["INAMET Angola", "CHIRPS", "ECMWF seasonal forecast", "FAO CropWat"]
+    },
+    {
+      "codigo": "C2",
+      "grupo": "C",
+      "grupo_nome": "Clima Extremo",
+      "pergunta": "Choveu muito de repente. O meu campo vai inundar?",
+      "descricao_tecnica": "Avaliar risco de encharcamento e erosão após chuva intensa com base na topografia, tipo de solo e cobertura vegetal.",
+      "parametros": {
+        "precipitacao_24h": "mm",
+        "tipo_solo": ["arenoso", "argiloso", "franco"],
+        "declividade": ["plano", "ondulado", "inclinado"],
+        "cobertura_vegetal": "string",
+        "cultura_actual": "string"
+      },
+      "logica": {
+        "risco_alto": "chuva > 60 mm/24h E solo argiloso E declividade > 5%",
+        "lixiviacao": "solo arenoso absorve melhor mas lixivia nutrientes",
+        "modelo": "Equação Universal de Perda de Solo (USLE simplificada)",
+        "encharcamento": "topografia plana + argila → alerta de encharcamento",
+        "tolerancia_feijao": "suporta até 24h encharcado; além disso apodrecimento de raiz"
+      },
+      "exemplo_resultado": "Com 85 mm de chuva em 24 horas no Huambo e solo argiloso em campo plano, há risco moderado de encharcamento por 48 horas. Abra valas de drenagem no perímetro do campo hoje. O feijão suporta até 24h encharcado — além disso começa a apodrecer a raiz. Actue antes do anoitecer.",
+      "fonte_dados": ["INAMET Angola", "FAO gestão solo", "USLE adaptada", "dados hidrológicos MINEA"]
+    },
+    {
+      "codigo": "C3",
+      "grupo": "C",
+      "grupo_nome": "Clima Extremo",
+      "pergunta": "O vento forte de ontem secou as folhas do milho. Vou perder a safra?",
+      "descricao_tecnica": "Estimar dano por vento (acamamento e dessecação foliar) e viabilidade de recuperação por fase e intensidade do evento.",
+      "parametros": {
+        "velocidade_vento_kmh": "km/h",
+        "fase_milho": ["vegetativo", "espiga", "maturação"],
+        "percentagem_plantas_acamadas": "%",
+        "temperatura_pos_evento": "°C"
+      },
+      "logica": {
+        "acamamento_vegetativo": "vento > 60 km/h + fase vegetativa → acamamento 20–40%, recuperação possível em 80%",
+        "acamamento_espiga": "fase espiga → redução colheita 15–25% mesmo com recuperação",
+        "dessecacao": "folhas enroladas + temp > 34°C → redução fotossíntese 20–30% por 3–5 dias"
+      },
+      "exemplo_resultado": "Com vento estimado de 65 km/h e 25% das plantas acamadas no milho em fase vegetativa, a recuperação é provável se não houver nova rajada em 5 dias. Endireite manualmente as plantas mais novas. A perda estimada é de 8–12% se agir agora. Milho em vegetativo é resiliente.",
+      "fonte_dados": ["CIMMYT stress abiótico milho", "dados vento INAMET", "estudos campo Namíbia/Zâmbia"]
+    },
+    {
+      "codigo": "C4",
+      "grupo": "C",
+      "grupo_nome": "Clima Extremo",
+      "pergunta": "O frio da noite está a danificar as plantas. Isso é geada?",
+      "descricao_tecnica": "Avaliar risco de geada ou frio excessivo e dano por cultura com base na temperatura mínima nocturna e fase de crescimento.",
+      "parametros": {
+        "temperatura_minima_nocturna": "°C",
+        "cultura": "string",
+        "fase": "string",
+        "altitude_m": "metros",
+        "humidade_relativa_nocturna": "%"
+      },
+      "logica": {
+        "risco_geada": "temp < 10°C + altitude > 1500m (planalto Angola) → risco de geada leve",
+        "tolerancias": {
+          "feijão_milho_floração": "dano grave abaixo de 8°C",
+          "mandioca": "tolerante até 12°C",
+          "batata_doce": "sensível abaixo de 10°C"
+        },
+        "proteccao": "cobrir plantas com sacos ou rama seca ao entardecer"
+      },
+      "exemplo_resultado": "Temperatura de 9°C no Huambo (altitude 1700m) com humidade de 90% indica risco elevado de geada leve esta noite. O seu feijão em floração é muito sensível. Cubra as plantas com sacos ou rama seca ao entardecer. Dano esperado sem protecção: 20–35% da produção de vagens.",
+      "fonte_dados": ["INAMET Angola", "FAO frio e geada culturas tropicais", "dados altitude SRTM"]
+    },
+    {
+      "codigo": "C5",
+      "grupo": "C",
+      "grupo_nome": "Clima Extremo",
+      "pergunta": "O calor está a queimar as folhas. Será que as plantas sobrevivem?",
+      "descricao_tecnica": "Avaliar stress térmico e calcular impacto na produtividade com base na temperatura máxima, duração do evento e fase da cultura.",
+      "parametros": {
+        "temperatura_maxima_diaria": "°C",
+        "duracao_calor_extremo_dias": "número de dias",
+        "cultura": "string",
+        "fase": "string",
+        "humidade_solo_actual": ["baixa", "média", "alta"]
+      },
+      "logica": {
+        "limiares": {
+          "milho_floração": "temp > 35°C por 3+ dias → esterilidade polínica, perda 20–40%",
+          "feijão_floração": "temp > 32°C → abortamento de flores, -15–30%",
+          "mandioca": "tolerante até 40°C, não perde significativamente até 35°C por 7 dias"
+        },
+        "multiplicador_stress_combinado": "calor + seca = perdas × 1,4"
+      },
+      "exemplo_resultado": "Com temperatura máxima de 37°C por 4 dias consecutivos no Cunene, o seu milho em floração sofreu stress térmico elevado. Perda estimada: 30–40% por esterilidade polínica. Já não é possível reverter — mas se irrigar agora (5 mm/dia) pode salvar o enchimento dos grãos. Perda sem irrigação: até 50%.",
+      "fonte_dados": ["CIMMYT heat stress maize", "FAO", "IPCC AR6", "INAMET/ERA5"]
+    },
+    {
+      "codigo": "S1",
+      "grupo": "S",
+      "grupo_nome": "Solo e Água",
+      "pergunta": "O meu solo é bom para plantar feijão ou preciso de adubo?",
+      "descricao_tecnica": "Avaliar a fertilidade estimada do solo com base em características visuais e regionais, e recomendar adubação mínima.",
+      "parametros": {
+        "localizacao": "região/província",
+        "cor_solo": ["amarelo", "vermelho", "castanho", "cinza"],
+        "textura_estimada": ["arenoso", "argiloso", "franco"],
+        "cultura_anterior": "string",
+        "uso_adubo_ultimos_2anos": ["sim", "não"]
+      },
+      "logica": {
+        "perfis_regionais": {
+          "planalto_solos_vermelhos": "ferrálicos, baixo fósforo, pH 5,0–5,5",
+          "sul_solos_amarelos": "muito arenosos, baixo N e P",
+          "solos_cinza_escuro": "mais matéria orgânica, melhor para feijão"
+        },
+        "recomendacao_pH_acido": "pH < 5,5 → aplicar calcário",
+        "adubacao_feijao": "100 kg/ha NPK 12-24-12 no plantio + 50 kg/ha ureia 30 dias depois"
+      },
+      "exemplo_resultado": "O seu solo vermelho-amarelado no Huambo é provavelmente ácido (pH ~5,2) e pobre em fósforo. Para o feijão, aplique 100 kg/ha de NPK 12-24-12 no plantio e 50 kg/ha de ureia 30 dias depois. Custo estimado: 25.000 Kz/ha. Sem adubo, espere colheita 40–50% abaixo do potencial.",
+      "fonte_dados": ["ISRIC SoilGrids Angola", "FAO fertilidade solos África", "MINAGRI Angola"]
+    },
+    {
+      "codigo": "S2",
+      "grupo": "S",
+      "grupo_nome": "Solo e Água",
+      "pergunta": "Tenho um rio perto. Vale a pena fazer rega por gravidade?",
+      "descricao_tecnica": "Avaliar viabilidade técnica e económica de irrigação por gravidade com base na topografia, distância à água e cultura.",
+      "parametros": {
+        "distancia_rio_m": "metros",
+        "desnivel_m": "metros",
+        "cultura": "string",
+        "area_irrigar_ha": "hectares",
+        "custo_canalizacao_disponivel": "Kz"
+      },
+      "logica": {
+        "viabilidade": "rega por gravidade viável se declividade >= 0,5% (desnível > 0,5 m / 100 m)",
+        "calculo_caudal": "ETc × área = caudal necessário",
+        "retorno": "culturas de alto valor (feijão-verde, batata) têm melhor retorno",
+        "formula_break_even": "custo instalação / (ganho por ciclo extra)"
+      },
+      "exemplo_resultado": "Com desnível de 2 m em 200 m de distância (1% de declividade) e 0,3 ha de feijão-verde, a irrigação por gravidade é viável. Custo estimado de instalação (mangueiras): 18.000 Kz. Ganho estimado por ciclo (colheita extra na época seca): 90.000 Kz. Retorno do investimento em 1 ciclo.",
+      "fonte_dados": ["FAO irrigação familiar África", "DNGRH Angola", "dados topográficos SRTM"]
+    },
+    {
+      "codigo": "S3",
+      "grupo": "S",
+      "grupo_nome": "Solo e Água",
+      "pergunta": "Posso reutilizar o mesmo campo de milho sem rotação ou vai empobrecer?",
+      "descricao_tecnica": "Simular a degradação de fertilidade do solo com monocultura contínua de milho e calcular a perda de produtividade ao longo de 3–5 anos.",
+      "parametros": {
+        "cultura": "milho",
+        "anos_monocultura": "número",
+        "uso_adubo": ["sim", "não"],
+        "tipo_solo": "string",
+        "gestao_residuos": ["incorpora", "queima", "retira"]
+      },
+      "logica": {
+        "perda_sem_adubo": "8–12% de produtividade por ano (acumulação patogénios, esgotamento N e P)",
+        "perda_com_adubo_minimo": "3–5%/ano",
+        "beneficio_rotacao": "milho–feijão: +20 kg N/ha/ano (fixação biológica feijão)",
+        "impacto_queima": "queima de resíduos elimina 80% do carbono orgânico"
+      },
+      "exemplo_resultado": "Com 3 anos de monocultura de milho sem adubo no Bié, a sua produtividade pode já ter caído 25–35%. No próximo ciclo, plante feijão ou amendoim nesse campo. O feijão fixa azoto e pode aumentar o rendimento do milho seguinte em 15–20%. Não queime os restos culturais — incorpore-os.",
+      "fonte_dados": ["FAO rotação culturas", "IITA", "WOCAT degradação solo África", "ISRIC"]
+    },
+    {
+      "codigo": "S4",
+      "grupo": "S",
+      "grupo_nome": "Solo e Água",
+      "pergunta": "A água da minha cacimba é suficiente para regar durante a seca?",
+      "descricao_tecnica": "Estimar a capacidade hídrica de uma cacimba ou poço e calcular por quantos dias consegue sustentar a irrigação de uma cultura.",
+      "parametros": {
+        "volume_cacimba_litros": "litros",
+        "caudal_recarga_litros_hora": "L/hora",
+        "cultura": "string",
+        "area_irrigada_m2": "m²",
+        "demanda_hidrica_diaria": "litros/m²/dia"
+      },
+      "logica": {
+        "demanda_exemplo": "feijão ETc ≈ 5 mm/dia = 50 litros/m²/dia",
+        "formula_autonomia": "(volume cacimba + recarga diária) ÷ demanda diária = dias de autonomia",
+        "alerta": "Se autonomia < 7 dias → alertar",
+        "poupanca": "mulching, rega nocturna reduzem demanda em 20–30%"
+      },
+      "exemplo_resultado": "A sua cacimba de 8.000 litros com recarga de 500 litros/hora sustenta a rega de 200 m² de feijão por 9 dias sem chuva. Se reduzir a área para 120 m², a autonomia sobe para 15 dias — o suficiente para a maioria das secas curtas do Huíla. Use rega ao amanhecer para perder menos por evaporação.",
+      "fonte_dados": ["FAO CropWat", "DNGRH Angola", "FAO pequena irrigação família", "estudos campo Namíbia"]
+    },
+    {
+      "codigo": "L1",
+      "grupo": "L",
+      "grupo_nome": "Colheita e Pós-Colheita",
+      "pergunta": "Quando é o melhor momento para colher o milho para guardar sem estragar?",
+      "descricao_tecnica": "Determinar o ponto óptimo de colheita e secagem do milho com base na humidade do grão, temperatura e método de armazenamento disponível.",
+      "parametros": {
+        "humidade_grao_percentagem": "%",
+        "temperatura_ambiente": "°C",
+        "metodo_armazenamento": ["saco", "celeiro", "armazém"],
+        "duracao_armazenamento_meses": "meses"
+      },
+      "logica": {
+        "humidade_segura": "<=13% para armazenamento seguro",
+        "necessidade_secagem": "humidade 18–25% → secar 5–10 dias ao sol",
+        "risco_aflatoxina": "temp > 30°C + humidade > 14% → multiplicação de Aflatoxina em < 3 semanas",
+        "instrucao_secagem": "camada fina de 10 cm, virar 2× por dia"
+      },
+      "exemplo_resultado": "O seu milho com grão ainda mole (humidade estimada ~22%) precisa de 7–10 dias de secagem ao sol antes de armazenar. Espalhe em camada fina de 10 cm e vire 2× por dia. Não guarde em saco fechado com humidade > 14% — o fungo Aflatoxina pode contaminar toda a colheita em 2 semanas.",
+      "fonte_dados": ["FAO pós-colheita cereais", "APHLIS perdas pós-colheita África", "IAPSC"]
+    },
+    {
+      "codigo": "L2",
+      "grupo": "L",
+      "grupo_nome": "Colheita e Pós-Colheita",
+      "pergunta": "Quanto da minha colheita de feijão vou perder no armazém se não tomar cuidado?",
+      "descricao_tecnica": "Estimar perda pós-colheita do feijão em armazenamento por caruncho (Callosobruchus) com base na temperatura, humidade e duração.",
+      "parametros": {
+        "cultura": "feijão",
+        "humidade_grao": "%",
+        "temperatura_armazem": "°C",
+        "duracao_armazenamento_meses": "meses",
+        "proteccao": {
+          "usada": ["sim", "não"],
+          "tipo": ["cinza vegetal", "sacos PICS", "inseticida", "nenhuma"]
+        }
+      },
+      "logica": {
+        "condicoes_caruncho": "temp > 25°C + humidade > 14% + sem protecção",
+        "perda_por_mes": "5–10%/mês",
+        "perda_em_4_meses": "25–40% sem tratamento",
+        "solucoes": {
+          "cinza_vegetal": "50g/kg → reduz perda em 70%",
+          "sacos_PICS": "reduz perda para < 2% em 6 meses, custo ~1.200 Kz/saco"
+        }
+      },
+      "exemplo_resultado": "Sem protecção, o seu feijão armazenado a 28°C e humidade de 16% pode perder 30–40% em 4 meses por caruncho. Misture 50g de cinza vegetal por kg de feijão — grátis e eficaz. Ou invista em sacos PICS (~1.200 Kz/saco). Com sacos PICS, perda < 2% em 6 meses. Compensa claramente.",
+      "fonte_dados": ["APHLIS Angola/África", "FAO armazenamento leguminosas", "NRI", "dados campo Zâmbia"]
+    },
+    {
+      "codigo": "L3",
+      "grupo": "L",
+      "grupo_nome": "Colheita e Pós-Colheita",
+      "pergunta": "Vale mais vender agora na colheita ou guardar para vender depois?",
+      "descricao_tecnica": "Comparar rentabilidade de venda imediata na colheita vs armazenamento estratégico com base em preço sazonal e custo de perda e armazenamento.",
+      "parametros": {
+        "cultura": "string",
+        "quantidade_kg": "kg",
+        "preco_actual_kz_kg": "Kz/kg",
+        "preco_historico_epoca_seca_kz_kg": "Kz/kg",
+        "custo_armazenamento_kz_mes": "Kz/mês",
+        "taxa_perda_sem_proteccao_por_mes": "%"
+      },
+      "logica": {
+        "ganho_guardar": "(preço futuro – preço actual) × quantidade armazenada – (custo armazenamento + perdas em valor)",
+        "referencia_angola": "milho e feijão sobem tipicamente 30–60% na época seca",
+        "break_even": "(custo armazenamento) / (diferença de preço por kg) = semanas necessárias para compensar",
+        "decisao": "Se ganho guardar > 0 → armazenar; caso contrário → vender agora"
+      },
+      "exemplo_resultado": "Vendendo 500 kg de feijão agora a 180 Kz/kg = 90.000 Kz. Se o preço subir para 280 Kz/kg em 4 meses (histórico Huambo), e você perder 8% por caruncho, receberá 128.960 Kz — ganho de 38.000 Kz extra. Investir 2.400 Kz em sacos PICS para garantir esse ganho: claramente vale a pena guardar.",
+      "fonte_dados": ["MINCO Angola", "FEWS NET", "APHLIS", "dados mercados CLUSA/USAID Angola"]
+    }
+  ]
+}

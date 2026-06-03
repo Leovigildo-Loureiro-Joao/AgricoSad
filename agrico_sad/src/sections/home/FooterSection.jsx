@@ -18,7 +18,7 @@ function FooterSection() {
           </div>
 
           <div>
-            <h4 className="mb-3 font-semibold text-white">Produto</h4>
+            <h4 className="mb-3 text-xl font-semibold text-white">Produto</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <a className="transition hover:text-white" href="#demonstracao">
@@ -39,7 +39,7 @@ function FooterSection() {
           </div>
 
           <div>
-            <h4 className="mb-3 font-semibold text-white">Operacao</h4>
+            <h4 className="mb-3 font-semibold text-white text-xl">Operacao</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <a className="transition hover:text-white" href="/login">
@@ -60,7 +60,7 @@ function FooterSection() {
           </div>
 
           <div>
-            <h4 className="mb-3 font-semibold text-white">Redes</h4>
+            <h4 className="mb-3 text-xl font-semibold text-white">Redes</h4>
             <div className="flex gap-4 text-xl">
               <FaGithub className="cursor-pointer transition hover:text-white" />
               <FaTwitter className="cursor-pointer transition hover:text-white" />

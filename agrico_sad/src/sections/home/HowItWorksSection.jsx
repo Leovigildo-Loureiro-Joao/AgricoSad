@@ -53,7 +53,7 @@ function HowItWorksSection() {
                     <step.icon className="text-xl text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-800">{step.title}</h3>
+                    <h3 className="font-semibold text-gray-800 text-2xl">{step.title}</h3>
                     <p className="text-sm text-gray-500">{step.desc}</p>
                   </div>
                 </div>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { GiHamburgerMenu, GiPlantsAndAnimals } from 'react-icons/gi';
+import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoClose } from 'react-icons/io5';
 import { marketingMenuItems } from '@/shared/config/navigation';
 
@@ -28,7 +28,32 @@ function MarketingLayout() {
             className="flex items-center gap-2"
             initial={{ opacity: 0, x: -20 }}
           >
-            <GiPlantsAndAnimals className="text-3xl text-emerald-600" />
+
+       
+            <motion.div
+              initial={{ rotate: -90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              transition={{ delay: 0.6, type: "spring", stiffness: 140 }}
+            >
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="20" fill="#e6faf7" />
+                <path
+                  d="M20 8 C20 8 12 14 12 22 C12 27 15.5 31 20 31 C24.5 31 28 27 28 22 C28 14 20 8 20 8Z"
+                  fill="#14b8a6"
+                  opacity="0.25"
+                />
+                <path
+                  d="M20 10 C20 10 14 16 14 22 C14 26.4 16.7 30 20 30 C23.3 30 26 26.4 26 22 C26 16 20 10 20 10Z"
+                  stroke="#14b8a6"
+                  strokeWidth="2"
+                  fill="none"
+                />
+                <line x1="20" y1="18" x2="24" y2="14" stroke="#14b8a6" strokeWidth="1.8" strokeLinecap="round" />
+                <line x1="20" y1="22" x2="16" y2="18" stroke="#14b8a6" strokeWidth="1.8" strokeLinecap="round" />
+              </svg>
+            </motion.div>
+
+
             <span className="text-xl font-bold text-gray-800">
               Agro<span className="text-emerald-600">Decide</span>
             </span>
