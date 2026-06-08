@@ -1,10 +1,10 @@
-# 🌾 AgroDecide SAD - Sistema de Apoio à Decisão Agrícola
+# 🌾 AgroClima SAD - Sistema de Apoio à Decisão Agrícola
 
 > Uma aplicação React moderna para análise e suporte à decisão em cultivos agrícolas
 
 ## 🎯 Visão Geral
 
-AgroDecide é um **Sistema de Apoio à Decisão (SAD)** desenvolvido para ajudar técnicos agrícolas e administradores a tomar decisões informadas baseadas em análises de dados.
+AgroClima é um **Sistema de Apoio à Decisão (SAD)** desenvolvido para ajudar técnicos agrícolas e administradores a tomar decisões informadas baseadas em análises de dados.
 
 ### Características Principais
 
@@ -261,8 +261,8 @@ npm run build
 
 **Docker**
 ```bash
-docker build -t agrodecide .
-docker run -p 3000:3000 agrodecide
+docker build -t AgroClima .
+docker run -p 3000:3000 AgroClima
 ```
 
 ---

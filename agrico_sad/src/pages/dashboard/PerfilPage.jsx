@@ -4,7 +4,7 @@ import { FiMail, FiPhone, FiUser } from 'react-icons/fi';
 function PerfilPage({ userType }) {
   const userData = {
     departamento: userType === 'tecnico' ? 'Analises' : 'Gestao',
-    email: 'utilizador@agrodecide.com',
+    email: 'utilizador@AgroClima.com',
     nome: userType === 'tecnico' ? 'Joao Silva' : 'Carlos Admin',
     telefone: '+244 900 000 000',
     tipo: userType === 'tecnico' ? 'Tecnico' : 'Administrador',

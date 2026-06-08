@@ -3,21 +3,21 @@ import { FiEdit, FiTrash2, FiUserPlus } from 'react-icons/fi';
 
 const users = [
   {
-    email: 'joao@agrodecide.com',
+    email: 'joao@AgroClima.com',
     id: 1,
     nome: 'Joao Silva',
     status: 'Ativo',
     tipo: 'Tecnico',
   },
   {
-    email: 'maria@agrodecide.com',
+    email: 'maria@AgroClima.com',
     id: 2,
     nome: 'Maria Santos',
     status: 'Ativo',
     tipo: 'Tecnico',
   },
   {
-    email: 'pedro@agrodecide.com',
+    email: 'pedro@AgroClima.com',
     id: 3,
     nome: 'Pedro Costa',
     status: 'Inativo',

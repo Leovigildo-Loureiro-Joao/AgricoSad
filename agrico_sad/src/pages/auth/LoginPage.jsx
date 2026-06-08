@@ -276,7 +276,7 @@ export default function LoginPage() {
           initial={{ x: -60, opacity: 0 }} animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.7 }}>
           <p className="text-2xl font-bold text-agro-teal" style={{ color: "#71F0C9", letterSpacing: "0.15em" }}>
-            AgroDecide
+            AgroClima
           </p>
           <p className="text-4xl font-extrabold text-white tracking-wider mt-1 uppercase"
             style={{ letterSpacing: "0.08em" }}>

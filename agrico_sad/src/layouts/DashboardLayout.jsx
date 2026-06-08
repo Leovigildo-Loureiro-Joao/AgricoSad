@@ -25,14 +25,14 @@ export default function DashboardLayout() {
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50 font-body">
       {/* Sidebar */}
-      <aside className="flex w-64 shrink-0 flex-col bg-slate-900">
+      <aside className="flex w-80 shrink-0 flex-col bg-slate-900">
         {/* Logo */}
         <div className="flex items-center gap-2.5 border-b border-slate-700/60 px-5 py-5">
           <div className="rounded-lg p-1.5 shadow-lg shadow-emerald-900/40">
             <RiPlantLine className="text-lg text-white" />
           </div>
           <span className="font-title text-lg font-bold tracking-tight text-white">
-            AgroDecide
+            AgroClima
           </span>
         </div>
 
@@ -83,7 +83,7 @@ export default function DashboardLayout() {
             <input
               type="text"
               placeholder="Pesquisar cenario, praga, cultura"
-              className="w-full rounded-lg border border-slate-200 bg-slate-50 py-2 pl-9 pr-4 text-sm text-slate-700 placeholder:text-slate-400 transition focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
+              className="w-full rounded-lg border border-slate-400 bg-slate-50 py-2 pl-12 pr-4 text-sm text-slate-700 placeholder:text-slate-400 transition focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
             />
           </div>
 

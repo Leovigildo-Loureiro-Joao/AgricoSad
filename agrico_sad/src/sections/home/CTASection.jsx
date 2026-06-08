@@ -10,11 +10,11 @@ function CTASection() {
           viewport={{ once: true }}
           whileInView={{ opacity: 1, y: 0 }}
         >
-          <h2 className="mb-4 text-3xl font-bold text-gray-800 md:text-4xl">
+          <h2 className="mb-4 text-lg font-bold text-gray-800 md:text-xl">
             Pronto para proteger a lavoura?
           </h2>
-          <p className="mx-auto mb-8 max-w-2xl text-lg text-gray-600">
-            Comece agora a tomar decisoes mais assertivas com o AgroDecide SAD.
+          <p className="mx-auto mb-8 max-w-2xl text-sm text-gray-600">
+            Comece agora a tomar decisoes mais assertivas com o AgroClima SAD.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <button

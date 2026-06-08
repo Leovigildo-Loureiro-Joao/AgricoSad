@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MdClose, MdGrain, MdPeople, MdPestControl, MdPlayCircle, MdSearch } from "react-icons/md";
+import { img1, img2, img3 } from "@/assets/AssetsManager";
 
 function MiniBarChart({ bars, barColor }) {
   return (
@@ -50,7 +51,7 @@ function ScenarioCard({ title, category }) {
           iconBg: "bg-amber-100",
           icon: MdGrain,
           iconColor: "text-amber-600",
-          image: "https://images.unsplash.com/photo-1592982537447-6f2a6a0c7c9c?w=100&h=100&fit=crop",
+          image: img1,
         };
       case "Agricultores":
         return {
@@ -58,7 +59,7 @@ function ScenarioCard({ title, category }) {
           iconBg: "bg-emerald-100",
           icon: MdPeople,
           iconColor: "text-emerald-600",
-          image: "https://images.unsplash.com/photo-1592982537447-6f2a6a0c7c9c?w=100&h=100&fit=crop",
+          image: img2,
         };
       case "Pragas":
       default:
@@ -67,7 +68,7 @@ function ScenarioCard({ title, category }) {
           iconBg: "bg-violet-100",
           icon: MdPestControl,
           iconColor: "text-violet-600",
-          image: "https://images.unsplash.com/photo-1592982537447-6f2a6a0c7c9c?w=100&h=100&fit=crop",
+          image: img3,
         };
     }
   };
@@ -182,7 +183,7 @@ export default function DashboardPage() {
 
   return (
     <div className="px-8 py-6">
-      <h1 className="mb-6 text-2xl font-bold text-slate-800">Bem vindo novamente</h1>
+      <h1 className="mb-6 text-xl font-bold text-slate-800">Bem vindo novamente</h1>
 
       <div className="mb-8 flex gap-4">
         {stats.map((stat) => (
@@ -267,7 +268,7 @@ export default function DashboardPage() {
           {filteredScenarios.length !== 1 ? "s" : ""} encontrado
           {filteredScenarios.length !== 1 ? "s" : ""}
         </span>
-        <span className="font-medium text-emerald-600">AgroDecide · Auxilio Tecnico</span>
+        <span className="font-medium text-emerald-600">AgroClima · Auxilio Tecnico</span>
       </div>
     </div>
   );

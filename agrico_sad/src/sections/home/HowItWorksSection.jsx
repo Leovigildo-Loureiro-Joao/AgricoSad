@@ -1,3 +1,4 @@
+import { AgricultorUsandoTablet } from '@/assets/AssetsManager';
 import { motion } from 'framer-motion';
 import { FiHelpCircle } from 'react-icons/fi';
 import { MdAnalytics, MdDataUsage } from 'react-icons/md';
@@ -36,7 +37,7 @@ function HowItWorksSection() {
             <span className="text-sm font-semibold uppercase tracking-wide text-emerald-600">
               Como funciona
             </span>
-            <h2 className="mb-4 mt-2 text-3xl font-bold text-gray-800 md:text-4xl">
+            <h2 className="mb-4 mt-2 text-lg font-bold text-gray-800 md:text-xl">
               Do risco a decisao em tres passos
             </h2>
             <p className="mb-8 text-gray-600">
@@ -53,7 +54,7 @@ function HowItWorksSection() {
                     <step.icon className="text-xl text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-800 text-2xl">{step.title}</h3>
+                    <h3 className="font-semibold text-gray-800 text-base">{step.title}</h3>
                     <p className="text-sm text-gray-500">{step.desc}</p>
                   </div>
                 </div>
@@ -70,7 +71,7 @@ function HowItWorksSection() {
             <img
               alt="Agricultor a usar tablet no campo"
               className="h-auto w-full object-cover"
-              src="https://images.unsplash.com/photo-1592982537445-2f6af012a098?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80"
+              src={AgricultorUsandoTablet}
             />
           </motion.div>
         </div>

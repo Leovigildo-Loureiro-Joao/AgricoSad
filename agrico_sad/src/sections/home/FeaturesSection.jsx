@@ -59,10 +59,10 @@ function FeaturesSection() {
           viewport={{ once: true }}
           whileInView={{ opacity: 1, y: 0 }}
         >
-          <h2 className="mb-4 text-3xl font-bold text-gray-800 md:text-4xl">
-            Porque usar o AgroDecide SAD?
+          <h2 className="mb-4 text-lg font-bold text-gray-800 md:text-xl">
+            Porque usar o AgroClima SAD?
           </h2>
-          <p className="mx-auto max-w-2xl text-gray-600">
+          <p className="mx-auto text-sm max-w-2xl text-gray-600">
             Tecnologia de apoio a decisao para produtores, tecnicos e equipas
             de gestao agricola.
           </p>
@@ -72,7 +72,7 @@ function FeaturesSection() {
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
-              className="group rounded-2xl bg-white p-6 shadow-lg transition-all hover:shadow-xl"
+              className="group rounded-lg bg-white p-6 shadow-lg transition-all hover:shadow-xl"
               initial={{ opacity: 0, y: 30 }}
               transition={{ delay: index * 0.1, duration: 0.4 }}
               viewport={{ once: true }}
@@ -81,12 +81,12 @@ function FeaturesSection() {
               <div
                 className={`${feature.bg} mb-5 flex h-14 w-14 items-center justify-center rounded-xl transition group-hover:scale-110`}
               >
-                <feature.icon className={`text-3xl ${feature.color}`} />
+                <feature.icon className={`text-lg ${feature.color}`} />
               </div>
-              <h3 className="mb-2 text-xl font-semibold text-gray-800">
+              <h3 className="mb-2 text-sm font-semibold text-gray-800">
                 {feature.title}
               </h3>
-              <p className="text-gray-600">{feature.desc}</p>
+              <p className="text-gray-600 text-xs">{feature.desc}</p>
             </motion.div>
           ))}
         </div>

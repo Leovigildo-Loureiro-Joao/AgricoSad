@@ -4,14 +4,14 @@ import { FaBug } from 'react-icons/fa';
 import { GiPlantSeed } from 'react-icons/gi';
 import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
 import { WiRainWind, WiThunderstorm } from 'react-icons/wi';
+import { geada } from '@/assets/AssetsManager';
 
 const slides = [
   {
     desc: 'O sistema antecipa eventos de geada com 72 horas de antecedencia.',
     icon: WiRainWind,
     id: 1,
-    image:
-      'https://images.unsplash.com/photo-1592417817098-9b4d5d5eaf6b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80',
+    image:{geada},
     title: 'Alerta de geada',
   },
   {
@@ -67,11 +67,11 @@ function CarouselSection() {
           viewport={{ once: true }}
           whileInView={{ opacity: 1, y: 0 }}
         >
-          <h2 className="mb-3 text-3xl font-bold md:text-4xl">
+          <h2 className="mb-3 text-lg font-bold md:text-xl text-white">
             Simulacoes realistas
           </h2>
-          <p className="mx-auto max-w-2xl text-gray-300">
-            Veja como o AgroDecide antecipa eventos climaticos e surtos de
+          <p className="mx-auto max-w-2xl text-xs text-gray-300">
+            Veja como o AgroClima antecipa eventos climaticos e surtos de
             pragas.
           </p>
         </motion.div>
@@ -96,14 +96,14 @@ function CarouselSection() {
               </motion.div>
             </AnimatePresence>
 
-            <div className="absolute bottom-0 left-0 right-0 p-8 text-white md:p-12">
+            <div className="absolute bottom-0 left-0 right-0 p-8 text-white md:p-4">
               <div className="mb-3 flex items-center gap-3">
-                <CurrentIcon className="text-4xl text-emerald-300" />
-                <h3 className="text-2xl font-bold md:text-3xl">
+                <CurrentIcon className="text-2xl text-emerald-300" />
+                <h3 className="text-sm text-white font-bold md:text-lg">
                   {slides[current].title}
                 </h3>
               </div>
-              <p className="max-w-2xl text-lg text-gray-200">
+              <p className="max-w-2xl text-sm text-gray-200">
                 {slides[current].desc}
               </p>
             </div>

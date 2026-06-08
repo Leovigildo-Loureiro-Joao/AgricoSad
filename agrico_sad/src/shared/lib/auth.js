@@ -1,5 +1,5 @@
 const USER_TYPE_STORAGE_KEY = 'userType';
-const AUTH_CHANGE_EVENT = 'agrodecide:auth-change';
+const AUTH_CHANGE_EVENT = 'AgroClima:auth-change';
 
 export const USER_ROLES = {
   admin: 'Administrador',

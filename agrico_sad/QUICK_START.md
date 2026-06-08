@@ -1,4 +1,4 @@
-# 🚀 GUIA RÁPIDO - AgroDecide SAD
+# 🚀 GUIA RÁPIDO - AgroClima SAD
 
 ## ⚡ Começar em 5 Minutos
 

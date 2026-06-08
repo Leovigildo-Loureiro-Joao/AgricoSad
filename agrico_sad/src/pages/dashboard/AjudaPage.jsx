@@ -23,8 +23,8 @@ export default function AjudaPage() {
   return (
     <div className="space-y-6 p-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-800">Ajuda</h1>
-        <p className="mt-2 text-gray-500">Centro de apoio rapido para utilizacao da plataforma.</p>
+        <h1 className="text-lg font-bold text-gray-800">Ajuda</h1>
+        <p className="mt-2 text-gray-500 text-xs">Centro de apoio rapido para utilizacao da plataforma.</p>
       </div>
 
       <motion.div
@@ -40,8 +40,8 @@ export default function AjudaPage() {
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-sky-100 text-sky-700">
                 <Icon className="text-xl" />
               </div>
-              <h2 className="text-lg font-semibold text-gray-800">{item.title}</h2>
-              <p className="mt-2 text-sm leading-6 text-gray-500">{item.description}</p>
+              <h2 className="text-sm font-semibold text-gray-800">{item.title}</h2>
+              <p className="mt-2 text-xs leading-6 text-gray-500">{item.description}</p>
             </div>
           );
         })}

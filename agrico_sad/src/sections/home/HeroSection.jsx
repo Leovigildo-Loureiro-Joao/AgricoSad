@@ -16,24 +16,24 @@ function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 text-white sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-8xl px-2 text-white sm:px-4 lg:px-6">
         <motion.div
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-2xl"
+          className="max-w-4xl"
           initial={{ opacity: 0, y: 30 }}
           transition={{ duration: 0.6 }}
         >
-          <span className="mb-4 inline-block rounded-full border border-emerald-400/30 bg-emerald-500/20 px-3 py-1 text-sm font-semibold backdrop-blur-sm">
+          <span className="mb-4 inline-block rounded-full border border-emerald-400/30 bg-emerald-500/20 px-3 py-1 text-xs font-semibold backdrop-blur-sm">
             Sistema de apoio a decisao
           </span>
-          <h1 className="mb-6 text-5xl font-bold leading-tight md:text-6xl">
+          <h1 className="mb-6 text-3xl font-bold text-white leading-tight md:text-4xl">
             Decisoes agricolas
             <br />
             <span className="text-emerald-300">
               inteligentes contra o clima e pragas
             </span>
           </h1>
-          <p className="mb-8 text-lg leading-relaxed text-gray-200 md:text-xl">
+          <p className="mb-8 text-sm leading-relaxed text-gray-200 md:text-lg">
             Simule cenarios climaticos extremos e surtos de pragas. Receba
             recomendacoes precisas para proteger a lavoura e aumentar a
             produtividade.
@@ -54,14 +54,14 @@ function HeroSection() {
             </button>
           </div>
 
-          <div className="mt-12 flex flex-wrap gap-8 text-sm">
-            <div className="flex items-center gap-2">
+          <div className="mt-12 flex flex-wrap gap-8 text-xs">
+            <div className="flex text-xs items-center gap-2">
               <FiShield /> Prevencao de riscos
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex text-xs items-center gap-2">
               <FiTrendingUp /> +32% produtividade media
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex text-xs items-center gap-2">
               <FiCloudRain /> Alertas climaticos em 7 dias
             </div>
           </div>

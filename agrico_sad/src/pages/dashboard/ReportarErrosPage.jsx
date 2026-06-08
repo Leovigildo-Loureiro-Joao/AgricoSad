@@ -11,8 +11,8 @@ export default function ReportarErrosPage() {
   return (
     <div className="space-y-6 p-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-800">Reportar Erros</h1>
-        <p className="mt-2 text-gray-500">Registe falhas, inconsistencias ou comportamentos inesperados.</p>
+        <h1 className="text-xl font-bold text-gray-800">Reportar Erros</h1>
+        <p className="mt-2 text-gray-500 text-xs">Registe falhas, inconsistencias ou comportamentos inesperados.</p>
       </div>
 
       <motion.div
@@ -26,15 +26,15 @@ export default function ReportarErrosPage() {
               <FiEdit3 className="text-xl" />
             </div>
             <div>
-              <h2 className="text-xl font-semibold text-gray-800">Formulario rapido</h2>
-              <p className="text-sm text-gray-500">Campo visual preparado para receber a descricao do erro.</p>
+              <h2 className="text-base font-semibold text-gray-800">Formulario rapido</h2>
+              <p className="text-xs text-gray-500">Campo visual preparado para receber a descricao do erro.</p>
             </div>
           </div>
 
           <div className="space-y-3 rounded-lg border border-gray-200 bg-gray-50 p-4">
             <div className="h-12 rounded-md border border-gray-200 bg-white" />
             <div className="h-32 rounded-md border border-gray-200 bg-white" />
-            <button className="inline-flex items-center gap-2 rounded bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700" type="button">
+            <button className="inline-flex items-center gap-2 rounded bg-emerald-600 px-4 py-2 text-xs font-semibold text-white transition hover:bg-emerald-700" type="button">
               <FiSend />
               Enviar erro
             </button>
@@ -44,9 +44,9 @@ export default function ReportarErrosPage() {
         <div className="rounded-lg border border-amber-100 bg-amber-50 p-6">
           <div className="flex items-center gap-3 text-amber-700">
             <FiAlertCircle className="text-xl" />
-            <h3 className="text-lg font-semibold">Como reportar</h3>
+            <h3 className="text-sm font-semibold">Como reportar</h3>
           </div>
-          <ul className="mt-4 space-y-3 text-sm leading-6 text-amber-900/80">
+          <ul className="mt-4 space-y-3 text-xs leading-6 text-amber-900/80">
             {steps.map((step) => (
               <li key={step} className="rounded-md bg-white/70 px-3 py-2 shadow-sm">
                 {step}

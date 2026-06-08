@@ -7,8 +7,8 @@ export default function MapaRiscosPage() {
   return (
     <div className="space-y-6 p-6 font-body">
       <div>
-        <h1 className="text-3xl font-bold text-slate-800">Mapa Riscos</h1>
-        <p className="mt-2 text-slate-500">
+        <h1 className="text-xl font-bold text-slate-800">Mapa Riscos</h1>
+        <p className="mt-2 text-xs text-slate-500">
           Visao geral dos focos de risco e monitoramento por provincia.
         </p>
       </div>
