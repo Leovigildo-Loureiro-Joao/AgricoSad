@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MdClose, MdGrain, MdPeople, MdPestControl, MdPlayCircle, MdSearch } from "react-icons/md";
-import { img1, img2, img3 } from "@/assets/AssetsManager";
+import { img1, img10, img2, img3, img4, img5, img6, img7, img8, img9 } from "@/assets/AssetsManager";
 
 function MiniBarChart({ bars, barColor }) {
   return (
@@ -42,7 +42,7 @@ function StatCard({ label, sub, icon: Icon, color, border, bars, barColor, onCli
   );
 }
 
-function ScenarioCard({ title, category }) {
+function ScenarioCard({ title, category, image }) {
   const getImageAndIcon = () => {
     switch (category) {
       case "Cenarios":
@@ -51,7 +51,6 @@ function ScenarioCard({ title, category }) {
           iconBg: "bg-amber-100",
           icon: MdGrain,
           iconColor: "text-amber-600",
-          image: img1,
         };
       case "Agricultores":
         return {
@@ -59,7 +58,6 @@ function ScenarioCard({ title, category }) {
           iconBg: "bg-emerald-100",
           icon: MdPeople,
           iconColor: "text-emerald-600",
-          image: img2,
         };
       case "Pragas":
       default:
@@ -68,17 +66,16 @@ function ScenarioCard({ title, category }) {
           iconBg: "bg-violet-100",
           icon: MdPestControl,
           iconColor: "text-violet-600",
-          image: img3,
         };
     }
   };
 
-  const { bg, iconBg, icon: Icon, iconColor, image } = getImageAndIcon();
+  const { bg, iconBg, icon: Icon, iconColor } = getImageAndIcon();
 
   return (
     <div className="flex min-h-96 flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
       <div className={`${bg} relative flex h-28 items-center justify-center overflow-hidden`}>
-        <img src={image} alt={category} className="h-full w-full object-cover opacity-30" />
+        <img src={image} alt={title} className="h-full w-full object-cover opacity-30" />
         <div className={`${iconBg} absolute rounded-lg p-3`}>
           <Icon className={`${iconColor} text-2xl`} />
         </div>
@@ -157,16 +154,16 @@ const stats = [
 ];
 
 const scenarios = [
-  { id: 1, title: "Como posso exterminar o surto de termitas?", category: "Pragas" },
-  { id: 2, title: "A lagarta de cartucho esta danificando minhas colheitas?", category: "Pragas" },
-  { id: 3, title: "Como aumentar a produtividade da soja?", category: "Cenarios" },
-  { id: 4, title: "Manejo sustentavel para pequenos agricultores", category: "Agricultores" },
-  { id: 5, title: "Como controlar a ferrugem asiatica?", category: "Pragas" },
-  { id: 6, title: "Tecnicas de irrigacao eficientes", category: "Cenarios" },
-  { id: 7, title: "Associacao de agricultores familiares", category: "Agricultores" },
-  { id: 8, title: "Como eliminar o percevejo marrom?", category: "Pragas" },
-  { id: 9, title: "Plantio direto na palha", category: "Cenarios" },
-  { id: 10, title: "Cooperativismo agricola", category: "Agricultores" },
+  { id: 1, image: img1, title: "Como posso exterminar o surto de termitas?", category: "Pragas" },
+  { id: 2, image: img2, title: "A lagarta de cartucho esta danificando minhas colheitas?", category: "Pragas" },
+  { id: 3, image: img3, title: "Como aumentar a produtividade da soja?", category: "Cenarios" },
+  { id: 4, image: img4, title: "Manejo sustentavel para pequenos agricultores", category: "Agricultores" },
+  { id: 5, image: img5, title: "Como controlar a ferrugem asiatica?", category: "Pragas" },
+  { id: 6, image: img6, title: "Tecnicas de irrigacao eficientes", category: "Cenarios" },
+  { id: 7, image: img7, title: "Associacao de agricultores familiares", category: "Agricultores" },
+  { id: 8, image: img8, title: "Como eliminar o percevejo marrom?", category: "Pragas" },
+  { id: 9, image: img9, title: "Plantio direto na palha", category: "Cenarios" },
+  { id: 10, image: img10, title: "Cooperativismo agricola", category: "Agricultores" },
 ];
 
 export default function DashboardPage() {
@@ -240,6 +237,7 @@ export default function DashboardPage() {
             {filteredScenarios.map((scenario) => (
               <ScenarioCard
                 key={scenario.id}
+                image={scenario.image}
                 title={scenario.title}
                 category={scenario.category}
               />

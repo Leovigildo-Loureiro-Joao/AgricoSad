@@ -11,7 +11,7 @@ const slides = [
     desc: 'O sistema antecipa eventos de geada com 72 horas de antecedencia.',
     icon: WiRainWind,
     id: 1,
-    image:{geada},
+    image: geada,
     title: 'Alerta de geada',
   },
   {

@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { MdLocationOn, MdWarning, MdBugReport, MdWaterDrop, MdHeatPump, MdThunderstorm } from "react-icons/md";
-import { WiThermometer, WiRaindrop, WiHurricane } from "react-icons/wi";
-import { GiCorn, GiPlantRoots } from "react-icons/gi";
+import { MdLocationOn, MdWarning, MdBugReport, MdWaterDrop } from "react-icons/md";
+import { WiThermometer, WiRaindrop } from "react-icons/wi";
+import { GiPlantRoots } from "react-icons/gi";
 
 // 🔧 FIX CRÍTICO: Corrigir ícones do Leaflet no React
 delete L.Icon.Default.prototype._getIconUrl;
@@ -108,7 +108,7 @@ const getCustomIcon = (risco) => {
 };
 
 // Componente principal do mapa
-export function MapaRealAngola({ selectedProvince, onSelectProvince, onViewRisco }) {
+export function MapaRealAngola({ onSelectProvince, onViewRisco }) {
   const [mapCenter, setMapCenter] = useState({ lat: -11.2027, lng: 17.8739 });
   const [mapZoom, setMapZoom] = useState(6);
 
@@ -191,6 +191,30 @@ export function MapaRealAngola({ selectedProvince, onSelectProvince, onViewRisco
 }
 
 // Componente de detalhes da província
+function RiscoBar({ label, value, color, icon: Icon }) {
+  const colors = {
+    orange: "bg-orange-400",
+    teal: "bg-teal-400",
+    red: "bg-red-400",
+    yellow: "bg-yellow-400",
+  };
+
+  return (
+    <div>
+      <div className="mb-1 flex justify-between text-xs text-gray-500">
+        <div className="flex items-center gap-1">
+          <Icon className="text-sm" />
+          <span>{label}</span>
+        </div>
+        <span className="font-medium text-gray-700">{value}%</span>
+      </div>
+      <div className="h-2 overflow-hidden rounded-full bg-gray-100">
+        <div className={`h-full rounded-full ${colors[color]}`} style={{ width: `${value}%` }} />
+      </div>
+    </div>
+  );
+}
+
 export function DetalhesProvincia({ provinciaId }) {
   if (!provinciaId) {
     return (
@@ -206,24 +230,6 @@ export function DetalhesProvincia({ provinciaId }) {
   const nivel = NIVEIS_CONFIG[prov?.risco];
 
   if (!prov || !riscos) return null;
-
-  const RiscoBar = ({ label, value, color, icon: Icon }) => {
-    const colors = { orange: "bg-orange-400", teal: "bg-teal-400", red: "bg-red-400", yellow: "bg-yellow-400" };
-    return (
-      <div>
-        <div className="flex justify-between text-xs text-gray-500 mb-1">
-          <div className="flex items-center gap-1">
-            <Icon className="text-sm" />
-            <span>{label}</span>
-          </div>
-          <span className="font-medium text-gray-700">{value}%</span>
-        </div>
-        <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-          <div className={`h-full rounded-full ${colors[color]}`} style={{ width: `${value}%` }} />
-        </div>
-      </div>
-    );
-  };
 
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-5 shadow-md">

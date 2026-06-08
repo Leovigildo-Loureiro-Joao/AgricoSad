@@ -16,7 +16,6 @@ export default function MapaRiscosPage() {
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(280px,0.8fr)]">
         <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
           <MapaRealAngola
-            selectedProvince={selectedProvinciaId}
             onSelectProvince={(prov) => setSelectedProvinciaId(prov.id)}
             onViewRisco={setSelectedProvinciaId}
           />

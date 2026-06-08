@@ -6,6 +6,7 @@ import {
   MdAdd, MdClose, MdHelp, MdVisibility
 } from "react-icons/md";
 import { GiCorn, GiPlantSeed, GiWheat } from "react-icons/gi";
+import { agrico1, agrico2, agrico3 } from "@/assets/AssetsManager";
 
 // ─── Mock Data ────────────────────────────────────────────────────────────────
 const AGRICULTORES = [
@@ -49,7 +50,7 @@ const LOCALIDADES = ["Huila", "Huambo", "Malanje"];
 // ─── Farmer Card (com bordas reduzidas) ───────────────────────────────────────
 function FarmerCard({ agricultor, index }) {
   const culturaIcon = getCulturaIcon(agricultor.cultura);
-  const campoImage = getCampoImage(agricultor.cultura);
+  const campoImage = [agrico1, agrico2, agrico3][index % 3] || getCampoImage(agricultor.cultura);
 
   return (
     <motion.div
