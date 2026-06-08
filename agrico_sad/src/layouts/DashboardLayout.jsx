@@ -1,106 +1,113 @@
-import { useState } from 'react';
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { FiLogOut, FiMenu } from 'react-icons/fi';
-import { IoClose } from 'react-icons/io5';
-import { getDashboardMenu } from '@/shared/config/navigation';
-import { clearStoredUserType, getRoleLabel } from '@/shared/lib/auth';
+import {
+  MdBugReport,
+  MdCloud,
+  MdDashboard,
+  MdHelp,
+  MdLocationOn,
+  MdMap,
+  MdMoreVert,
+  MdNotifications,
+  MdPerson,
+  MdSearch,
+} from "react-icons/md";
+import { RiPlantLine } from "react-icons/ri";
+import { NavLink, Outlet } from "react-router-dom";
 
-function DashboardLayout({ userType }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
-  const menuItems = getDashboardMenu(userType);
+const navItems = [
+  { icon: MdDashboard, label: "Dashboard", to: "/dashboard", end: true },
+  { icon: MdPerson, label: "Agricultor", to: "/agricultores" },
+  { icon: MdMap, label: "Mapa Riscos", to: "/mapa-riscos" },
+  { icon: MdBugReport, label: "Reportar Erros", to: "/reportar-erros" },
+  { icon: MdHelp, label: "Ajuda", to: "/ajuda" },
+];
 
-  const handleLogout = () => {
-    clearStoredUserType();
-    navigate('/login', { replace: true });
-  };
-
-  const handleNavigate = () => {
-    setIsOpen(false);
-  };
-
+export default function DashboardLayout() {
   return (
-    <div className="flex h-screen bg-gray-100">
-      <motion.aside
-        animate={{ x: 0 }}
-        className={`relative ${
-          isOpen ? 'block' : 'hidden'
-        } w-64 bg-dark-900 text-white shadow-lg md:block`}
-        initial={{ x: isOpen ? 0 : -280 }}
-      >
-          <div className="mb-10 flex items-center justify-center gap-3">
-            <motion.div
-              initial={{ rotate: -90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              transition={{ delay: 0.6, type: "spring", stiffness: 140 }}
-            >
-              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="20" cy="20" r="20" fill="#ECFDF5" />
-                <path d="M20 8 C20 8 12 14 12 22 C12 27 15.5 31 20 31 C24.5 31 28 27 28 22 C28 14 20 8 20 8Z"
-                  fill="#059669" opacity="0.25" />
-                <path d="M20 10 C20 10 14 16 14 22 C14 26.4 16.7 30 20 30 C23.3 30 26 26.4 26 22 C26 16 20 10 20 10Z"
-                  stroke="#059669" strokeWidth="2" fill="none" />
-                <line x1="20" y1="18" x2="24" y2="14" stroke="#059669" strokeWidth="1.8" strokeLinecap="round" />
-                <line x1="20" y1="22" x2="16" y2="18" stroke="#059669" strokeWidth="1.8" strokeLinecap="round" />
-              </svg>
-            </motion.div>
-            <span className="text-2xl font-bold tracking-tight text-white">
-              Agro<span className="text-agro-teal">Decide</span>
-            </span>
+    <div className="flex h-screen overflow-hidden bg-slate-50 font-body">
+      {/* Sidebar */}
+      <aside className="flex w-64 shrink-0 flex-col bg-slate-900">
+        {/* Logo */}
+        <div className="flex items-center gap-2.5 border-b border-slate-700/60 px-5 py-5">
+          <div className="rounded-lg p-1.5 shadow-lg shadow-emerald-900/40">
+            <RiPlantLine className="text-lg text-white" />
           </div>
+          <span className="font-title text-lg font-bold tracking-tight text-white">
+            AgroDecide
+          </span>
+        </div>
 
-        <nav className="mt-8  bg-dark-900">
-          {menuItems.map((item) => (
+        {/* Nav */}
+        <nav className="flex flex-1 flex-col gap-0.5 px-3 py-4">
+          {navItems.map((item) => (
             <NavLink
-              key={item.href}
+              key={item.to}
+              end={item.end}
+              to={item.to}
               className={({ isActive }) =>
-                `block border-l-4 px-6 py-3 transition-colors ${
+                `flex w-full items-center gap-3 rounded-sm px-3 py-2.5 font-medium transition-all duration-150 ${
                   isActive
-                    ? 'border-white bg-emerald-600'
-                    : 'border-transparent hover:border-white hover:bg-emerald-600'
+                    ? "bg-emerald-600 pl-8 text-sm text-white shadow-md shadow-emerald-900/30"
+                    : "text-xs text-slate-400 hover:bg-slate-800 hover:text-white"
                 }`
               }
-              onClick={handleNavigate}
-              to={item.href}
             >
+              <item.icon className="shrink-0 text-[2rem]" />
               {item.label}
             </NavLink>
           ))}
         </nav>
 
-        <div className="absolute bottom-0 w-64 border-t border-emerald-600 p-4">
-          <div className="mb-4 text-sm">
-            <p className="font-semibold">{getRoleLabel(userType)}</p>
+        {/* User */}
+        <div className="flex items-center gap-3 border-t border-slate-700/60 px-4 py-4">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-emerald-500 text-sm font-bold text-white">
+            TE
           </div>
-          <button
-            className="flex w-full items-center justify-center gap-2 rounded bg-red-600 px-4 py-2 transition-colors hover:bg-red-700"
-            onClick={handleLogout}
-            type="button"
-          >
-            <FiLogOut /> Sair
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-sm font-semibold text-white">
+              Tecnico Extensao
+            </p>
+            <p className="truncate text-xs text-slate-400">Extensionista</p>
+          </div>
+          <button className="text-slate-400 transition-colors hover:text-white">
+            <MdMoreVert className="text-lg" />
           </button>
         </div>
-      </motion.aside>
+      </aside>
 
-      <div className="flex flex-1 flex-col">
-        <div className="flex items-center justify-between bg-agro-dark p-4 text-white shadow-md md:hidden">
-          <button
-            className="text-2xl text-agro-teal"
-            onClick={() => setIsOpen((current) => !current)}
-            type="button"
-          >
-            {isOpen ? <IoClose /> : <FiMenu />}
-          </button>
-          <span className="font-bold tracking-tight text-white">AgroDecide SAD</span>
-        </div>
+      {/* Main */}
+      <div className="flex flex-1 flex-col overflow-hidden">
+        {/* Topbar */}
+        <header className="flex shrink-0 items-center gap-4 border-b border-slate-100 bg-white px-6 py-3 shadow-sm">
+          <div className="relative flex-1 max-w-sm">
+            <MdSearch className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-lg text-slate-400" />
+            <input
+              type="text"
+              placeholder="Pesquisar cenario, praga, cultura"
+              className="w-full rounded-lg border border-slate-200 bg-slate-50 py-2 pl-9 pr-4 text-sm text-slate-700 placeholder:text-slate-400 transition focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
+            />
+          </div>
 
-        <div className="flex-1 overflow-auto p-6  bg-dark-900" >
+          <div className="ml-auto flex items-center gap-4">
+            <button className="flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-xs text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-800">
+              <MdCloud className="text-lg text-slate-400" />
+              Alertas Climaticos
+            </button>
+            <button className="flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-xs text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-800">
+              <MdLocationOn className="text-lg text-slate-400" />
+              Luanda - Morro Bento
+            </button>
+            <button className="relative rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-800">
+              <MdNotifications className="text-xl" />
+              <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-rose-400" />
+            </button>
+          </div>
+        </header>
+
+        {/* Page content */}
+        <main className="flex-1 overflow-y-auto">
           <Outlet />
-        </div>
+        </main>
       </div>
     </div>
   );
 }
-
-export default DashboardLayout;

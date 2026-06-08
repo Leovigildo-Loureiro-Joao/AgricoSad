@@ -329,9 +329,9 @@ export default function LoginPage() {
       </div>
 
       {/* ════ RIGHT PANEL ════ */}
-      <div className="relative flex items-center justify-center bg-dark"
+      <div className="relative flex items-center justify-center"
         style={{ width: "520px", minWidth: "420px" }}>
-        <motion.div className="w-full max-w-sm px-8"
+        <motion.div className="w-full max-w-md px-8"
           initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.75, ease: "easeOut" }}>
 
@@ -364,7 +364,7 @@ export default function LoginPage() {
             onFocus={() => setPassFocused(true)} onBlur={() => setPassFocused(false)} delay={0.85} accent />
 
           <motion.button
-            className="w-full mt-8 py-4 rounded-xl text-white font-semibold text-sm uppercase"
+            className="w-full mt-8 py-4 rounded-xl text-white font-semibold text-xs uppercase"
             style={{ background: "#111827", letterSpacing: "0.12em" }}
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.5 }}
@@ -378,7 +378,7 @@ export default function LoginPage() {
             Entrar
           </motion.button>
 
-          <motion.p className="text-center mt-5 text-sm text-gray-500 cursor-pointer transition-colors"
+          <motion.p className="text-center mt-5 text-xs text-gray-500 cursor-pointer transition-colors"
             style={{}} onMouseEnter={e => e.target.style.color = "#059669"}
             onMouseLeave={e => e.target.style.color = ""}
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.15 }}>
@@ -398,7 +398,7 @@ function FloatingField({ label, value, type, focused, onChange, onFocus, onBlur,
       transition={{ delay, duration: 0.5 }}>
       <input type={type} value={value} onFocus={onFocus} onBlur={onBlur}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full pt-5 pb-2 px-0 bg-transparent border-0 border-b text-gray-900 text-sm outline-none"
+        className="w-full pt-5 pb-2 px-0 bg-transparent border-0 border-b text-gray-900 text-xs outline-none"
         style={{
           borderBottomColor: focused ? (accent ? "#059669" : "#111827") : "#d1d5db",
           borderBottomWidth: "1.5px",
